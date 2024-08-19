@@ -5,18 +5,18 @@ import java.util.List;
 
 public class Classe {
     private String titulo;
-    private List<Habilidade> habilidades;
+    private List<Magia> habilidades;
 
     public Classe(String titulo) {
         this.titulo = titulo;
         this.habilidades = new ArrayList<>();
     }
 
-    public List<Habilidade> getHabilidades() {
+    public List<Magia> getHabilidades() {
         return habilidades;
     }
 
-    public void addHabilidade(Habilidade habilidade) {
+    public void addHabilidade(Magia habilidade) {
         this.habilidades.add(habilidade);
     }
 

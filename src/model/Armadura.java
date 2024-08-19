@@ -4,7 +4,7 @@ public class Armadura {
     private int defesa;
 
     public Armadura() {
-        this.defesa = 1;
+        this.defesa = 10;
     }
 
     public Armadura(int defesa) {
