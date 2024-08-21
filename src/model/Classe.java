@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.magia.Magia;
+
 public class Classe {
     private String titulo;
     private List<Magia> habilidades;

@@ -1,6 +1,8 @@
 package util;
-import model.Magia;
 import model.TipoMagia;
+import model.magia.Magia;
+import model.magia.MagiaOfensiva;
+import model.magia.MagiaRestaurativa;
 
 /**
  * @author GPT
@@ -12,16 +14,19 @@ public class Grimorio {
     static {
         // Inicializa o array com o tamanho adequado
         MAGIAS = new Magia[]{
-            new Magia(TipoMagia.FOGO, 10, "Luz Branca"),
-            new Magia(TipoMagia.FOGO, 8, "Chama Dourada"),
-            new Magia(TipoMagia.AR, 9, "Vento Tornado"),
-            new Magia(TipoMagia.TERRA, 9, "Terremoto"),
-            new Magia(TipoMagia.LUZ, 6, "Explosão de Luz"),
-            new Magia(TipoMagia.TREVAS, 10, "Escudo das Trevas")
+            new MagiaRestaurativa(TipoMagia.FOGO, "Luz Branca", 2),
+            new MagiaOfensiva(TipoMagia.FOGO, "Chama Dourada", 8),
+            new MagiaOfensiva(TipoMagia.AR, "Vento Tornado", 9),
+            new MagiaOfensiva(TipoMagia.TERRA, "Terremoto", 9),
+            new MagiaOfensiva(TipoMagia.LUZ, "Explosão de Luz", 6),
+            new MagiaRestaurativa(TipoMagia.AGUA, "Água Sagrada", 4)
+
+            //TODO Essa vai pra defesa
+            // new MagiaOfensiva(TipoMagia.TREVAS, "Escudo das Trevas", 10) 
+            // new Magia(TipoMagia.AR, 8, "Barreira de Ar"),
             
             // new Magia(TipoMagia.FOGO, 7, "Conflagração"),
             // new Magia(TipoMagia.AGUA, 6, "Chuva Intensa"),
-            // new Magia(TipoMagia.AR, 8, "Barreira de Ar"),
             // new Magia(TipoMagia.TERRA, 7, "Mudança de Terra"),
             // new Magia(TipoMagia.LUZ, 12, "Luz Criativa"),
             // new Magia(TipoMagia.TREVAS, 11, "Anseio das Trevas"),

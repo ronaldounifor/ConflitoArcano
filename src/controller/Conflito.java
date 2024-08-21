@@ -3,11 +3,13 @@ package controller;
 import java.util.Scanner;
 
 import model.Classe;
-import model.Magia;
 import model.Personagem;
 import model.item.Anel;
 import model.item.Brinco;
 import model.item.Chapeu;
+import model.magia.Magia;
+import model.magia.MagiaOfensiva;
+import model.magia.MagiaRestaurativa;
 import util.Dado;
 import util.Grimorio;
 
@@ -38,9 +40,17 @@ public class Conflito {
 
     private void iniciarTurno(Personagem atual, Personagem alvo) {
         Magia magia = escolherMagia(atual);
+
+        if(magia instanceof MagiaOfensiva)
+            aplicarDano((MagiaOfensiva) magia, atual, alvo);
+        else if(magia instanceof MagiaRestaurativa)
+            aplicarCura((MagiaRestaurativa) magia, atual);
+
+    }
+
+    private void aplicarDano(MagiaOfensiva magia, Personagem atual, Personagem alvo) {
         int resultadoDado = Dado.lancarDado(6);
         int valorArmadura = alvo.getValorDefesa();
-
         int dano = magia.getDano() * resultadoDado - valorArmadura;
 
         if(dano > 0) {
@@ -51,6 +61,17 @@ public class Conflito {
         } else {
             System.out.println("DANO BAIXO!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         }
+    }
+
+    private void aplicarCura(MagiaRestaurativa magia, Personagem atual) {
+        int resultadoDado = Dado.lancarDado(6);
+        int cura = magia.getCura() * resultadoDado;
+
+        atual.curar(cura);
+        
+        System.out.println(atual.getNome()+" lançou \""+magia.getNome()+"\" e curou : "+cura+" de vida");   
+        
+        imprimirLuta();
     }
     
     private Magia escolherMagia(Personagem atual) {

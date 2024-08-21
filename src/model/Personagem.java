@@ -6,7 +6,7 @@ import java.util.List;
 import model.item.Equipamento;
 
 public class Personagem {
-    public static final int VIDA_MAX = 200;
+    public static final int VIDA_MAX = 80;
     private String nome;
     private Classe classe;
     private int nivel;
@@ -31,6 +31,13 @@ public class Personagem {
 
     public void levarDano(int dano) {
         this.vida -= dano;
+    }
+
+    public void curar(int cura) {
+        if(vida + cura > VIDA_MAX)
+            this.vida = VIDA_MAX;
+        else
+            this.vida = vida + cura;
     }
 
     public String getNome() {

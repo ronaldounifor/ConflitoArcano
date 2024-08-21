@@ -1,13 +1,13 @@
-package model;
+package model.magia;
 
-public class Magia {
-    private TipoMagia tipo;
-    private int dano;
-    private String nome;
+import model.TipoMagia;
+
+public abstract class Magia {
+    protected TipoMagia tipo;
+    protected String nome;
     
-    public Magia(TipoMagia tipo, int dano, String nome) {
+    public Magia(TipoMagia tipo, String nome) {
         this.tipo = tipo;
-        this.dano = dano;
         this.nome = nome;
     }
 
@@ -17,16 +17,9 @@ public class Magia {
     public void setTipo(TipoMagia tipo) {
         this.tipo = tipo;
     }
-    public int getDano() {
-        return dano;
-    }
-    public void setDano(int dano) {
-        this.dano = dano;
-    }
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
