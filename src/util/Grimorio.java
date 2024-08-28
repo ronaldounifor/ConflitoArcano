@@ -14,7 +14,7 @@ public class Grimorio {
     static {
         // Inicializa o array com o tamanho adequado
         MAGIAS = new Magia[]{
-            new MagiaRestaurativa(TipoMagia.FOGO, "Luz Branca", 2),
+            new MagiaRestaurativa(TipoMagia.LUZ, "Luz Branca", 2),
             new MagiaOfensiva(TipoMagia.FOGO, "Chama Dourada", 8),
             new MagiaOfensiva(TipoMagia.AR, "Vento Tornado", 9),
             new MagiaOfensiva(TipoMagia.TERRA, "Terremoto", 9),
