@@ -6,15 +6,20 @@ import java.util.Random;
  * @author GPT
  */
 public class Dado {
-    private static final Random RANDOM = new Random();
+    private final Random RANDOM = new Random();
+    private static Dado dado;
 
-    // public static int lancarD20() {
-    //     return RANDOM.nextInt(20) + 1;
-    // }
-    // public static int lancarD6() {
-    //     return RANDOM.nextInt(6) + 1;
-    // }
-    public static int lancarDado(int faces) {
+    private Dado() {}
+
+    public int lancarDado(int faces) {
         return RANDOM.nextInt(faces) + 1;
     }
+
+    public static synchronized Dado getInstancia() {
+        if(dado != null)
+            dado = new Dado();
+
+        return dado;
+    }
+
 }
