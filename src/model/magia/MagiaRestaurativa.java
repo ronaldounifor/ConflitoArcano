@@ -18,7 +18,7 @@ public class MagiaRestaurativa extends Magia {
 
     @Override
     public void aplicarEfeito(Personagem atual, Personagem alvo) {
-        int resultadoDado = Dado.lancarDado(6);
+        int resultadoDado = Dado.getInstancia().lancarDado(6);
         int cura = this.cura * resultadoDado;
 
         atual.curar(cura);

@@ -18,7 +18,7 @@ public class MagiaOfensiva extends Magia {
 
     @Override
     public void aplicarEfeito(Personagem atual, Personagem alvo) {
-        int resultadoDado = Dado.lancarDado(12);
+        int resultadoDado = Dado.getInstancia().lancarDado(12);
         int valorArmadura = alvo.getValorDefesa();
         int dano = this.dano * resultadoDado - valorArmadura;
 
