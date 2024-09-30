@@ -1,56 +1,40 @@
 package controller;
 
-import java.util.Scanner;
-
-import model.Classe;
 import model.Personagem;
 import model.item.Anel;
 import model.item.Brinco;
 import model.item.Chapeu;
 import model.magia.Magia;
-import util.Grimorio;
 
 public class Conflito {
-    private static Scanner scanner = new Scanner(System.in);
     private Personagem heroi;
     private Personagem vilao;
 
     public Conflito(String nomeHeroi, String nomeVilao) {
-        this.heroi = new Personagem(nomeHeroi, new Classe("Herói"));
+        this.heroi = new Personagem(nomeHeroi);
         this.heroi.equipar(new Anel());
-        this.vilao = new Personagem(nomeVilao, new Classe("Vilão"));
+        this.vilao = new Personagem(nomeVilao);
         this.vilao.equipar(new Chapeu());
         this.vilao.equipar(new Brinco());
-
-        iniciar();
     }
 
-    private void iniciar() {
-        
-        while(heroi.getVida() > 0 && vilao.getVida() > 0) {
-            iniciarTurno(heroi, vilao);
+    public boolean turnoHeroi(Magia magia) {
+        magia.aplicarEfeito(heroi, vilao);
 
-            if(vilao.getVida() > 0)
-                iniciarTurno(vilao, heroi);
-        }
+        imprimirResultado();
+
+        return vilao.getVida() > 0;
     }
 
-    private void iniciarTurno(Personagem atual, Personagem alvo) {
-        escolherMagia(atual).aplicarEfeito(atual, alvo);
-     
-        imprimirLuta();
-    }
-    
-    private Magia escolherMagia(Personagem atual) {
-        System.out.println("Escolha a magia que o " + atual.getNome() + " irá usar:");
-        int i = 0;
-        for (Magia habilidade : Grimorio.MAGIAS)
-            System.out.println("["+(i++)+"]. "+habilidade.getNome());
+    public boolean turnoVilao(Magia magia) {
+        magia.aplicarEfeito(vilao, heroi);
 
-        return Grimorio.MAGIAS[scanner.nextInt()];
+        imprimirResultado();
+
+        return heroi.getVida() > 0;
     }
 
-    private void imprimirLuta() {
+    private void imprimirResultado() {
         System.out.println();
         System.out.println("#########################################");
         System.out.println(heroi.getNome()+"("+(heroi.getVida()>0?heroi.getVida():0)+" de vida), "

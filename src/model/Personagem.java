@@ -8,7 +8,6 @@ import model.item.Equipamento;
 public class Personagem {
     public static final int VIDA_MAX = 80;
     private String nome;
-    private Classe classe;
     private int nivel;
     private int vida;
     private List<Equipamento> equipamentos;
@@ -17,9 +16,8 @@ public class Personagem {
     //private atributos / pontos
 
     
-    public Personagem(String nome, Classe classe) {
+    public Personagem(String nome) {
         this.nome = nome;
-        this.classe = classe;
         this.nivel = 1;
         this.equipamentos = new ArrayList<>();
         this.vida = VIDA_MAX;
@@ -42,10 +40,6 @@ public class Personagem {
 
     public String getNome() {
         return nome;
-    }
-    
-    public Classe getClasse() {
-        return classe;
     }
     
     public int getNivel() {
