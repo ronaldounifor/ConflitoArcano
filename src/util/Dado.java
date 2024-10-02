@@ -16,7 +16,7 @@ public class Dado {
     }
 
     public static synchronized Dado getInstancia() {
-        if(dado != null)
+        if(dado == null)
             dado = new Dado();
 
         return dado;
