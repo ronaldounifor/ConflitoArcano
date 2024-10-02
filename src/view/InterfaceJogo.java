@@ -11,6 +11,7 @@ public class InterfaceJogo {
 
       public InterfaceJogo() {
             scan = new Scanner(System.in);
+            
 
             iniciarJogo();
 
@@ -23,7 +24,6 @@ public class InterfaceJogo {
       private void iniciarJogo() {
             System.out.println("Nome do heroi: ");
             String nomeHeroi = scan.nextLine();
-            
             
             System.out.println("Nome do vilao: ");
             String nomeVilao = scan.nextLine();
