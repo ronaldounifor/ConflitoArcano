@@ -3,7 +3,15 @@ package data;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import model.Personagem;
 
 /**
  * @author GPT
@@ -36,7 +44,7 @@ public class GameDatabase {
             pstmt.setInt(2, characterTwoId);
             pstmt.executeUpdate();
 
-            try (var generatedKeys = pstmt.getGeneratedKeys()) {
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int duelId = generatedKeys.getInt(1);
                     System.out.println("Duel inserted with ID: " + duelId);
@@ -64,4 +72,42 @@ public class GameDatabase {
             System.out.println(e.getMessage());
         }
     }
+
+    public Map<Integer, String> getAllCharacterNames() {
+        Map<Integer, String> characters = new HashMap<>();
+        String query = "SELECT id, name FROM Characters";
+
+        try (Connection conn = DriverManager.getConnection(DATABASE_URL);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next())
+                characters.put(rs.getInt("id"), rs.getString("name"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return characters;
+    }
+
+    public Personagem findPersonagemByID(int nextInt) {
+        Personagem personagem = null;
+
+        String query = "SELECT name, health FROM Characters";
+
+        try (Connection conn = DriverManager.getConnection(DATABASE_URL);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next())
+                personagem = new Personagem(rs.getString("name"), rs.getInt("id"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return personagem;
+    }
+
 }

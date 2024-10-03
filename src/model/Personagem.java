@@ -8,19 +8,13 @@ import model.item.Equipamento;
 public class Personagem {
     public static final int VIDA_MAX = 80;
     private String nome;
-    private int nivel;
     private int vida;
     private List<Equipamento> equipamentos;
-    //private Raca raca;
-    //private genero
-    //private atributos / pontos
-
     
-    public Personagem(String nome) {
+    public Personagem(String nome, int vida) {
         this.nome = nome;
-        this.nivel = 1;
         this.equipamentos = new ArrayList<>();
-        this.vida = VIDA_MAX;
+        this.vida = vida;
     }
     
     public int getVida() {
@@ -40,14 +34,6 @@ public class Personagem {
 
     public String getNome() {
         return nome;
-    }
-    
-    public int getNivel() {
-        return nivel;
-    }
-
-    public void subirNivel() {
-        this.nivel++;
     }
 
     public int getValorDefesa() {

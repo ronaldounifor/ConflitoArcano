@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Map;
+
 import data.GameDatabase;
 import model.Personagem;
 import model.item.Anel;
@@ -10,22 +12,15 @@ import model.magia.Magia;
 public class Conflito {
     private GameDatabase entityManager;
 
+    private int numeroInimigos;
+
     private Personagem heroi;
     private Personagem vilao;
 
-    public Conflito(String nomeHeroi, String nomeVilao) {
+    public Conflito(int dificuldade) {
         entityManager = new GameDatabase();
 
-        this.heroi = new Personagem(nomeHeroi);
-        this.heroi.equipar(new Anel());
-
-        entityManager.insertCharacter(heroi.getNome(), heroi.getVida(), 10, heroi.getValorDefesa());
-        
-        this.vilao = new Personagem(nomeVilao);
-        this.vilao.equipar(new Chapeu());
-        this.vilao.equipar(new Brinco());
-
-        entityManager.insertCharacter(vilao.getNome(), vilao.getVida(), 10, vilao.getValorDefesa());
+        this.numeroInimigos = dificuldade;
     }
 
     public boolean turnoHeroi(Magia magia) {
@@ -58,5 +53,13 @@ public class Conflito {
                         + vilao.getNome()+"("+(vilao.getVida()>0?vilao.getVida():0)+" de vida)");
         System.out.println("#########################################");
         System.out.println();
+    }
+
+    public Map<Integer, String> iniciar() {
+        return entityManager.getAllCharacterNames();
+    }
+
+    public void selecionarHeroi(int nextInt) {
+        heroi = entityManager.findPersonagemByID(nextInt);
     }
 }

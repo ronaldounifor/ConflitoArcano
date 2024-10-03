@@ -1,5 +1,7 @@
 package view;
 
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 import controller.Conflito;
@@ -11,7 +13,6 @@ public class InterfaceJogo {
 
       public InterfaceJogo() {
             scan = new Scanner(System.in);
-            
 
             iniciarJogo();
 
@@ -22,14 +23,20 @@ public class InterfaceJogo {
 
       
       private void iniciarJogo() {
-            System.out.println("Nome do heroi: ");
-            String nomeHeroi = scan.nextLine();
+            System.out.println("Escolha o nível de dificuldade (1 - Facil, 2 - Medio, 3 - Dificil): ");
+            int dificuldade = scan.nextInt();
+
+            this.conflito = new Conflito(dificuldade);
+
+            Map<Integer, String> personagens = conflito.iniciar();
+
+            System.out.println("Escolhe o seu personagem: ");
+            for (Entry<Integer, String> personagem : personagens.entrySet())
+                  System.out.println("["+personagem.getKey()+"]: "+personagem.getValue());
             
-            System.out.println("Nome do vilao: ");
-            String nomeVilao = scan.nextLine();
-            
-            this.conflito = new Conflito(nomeHeroi, nomeVilao);
+            conflito.selecionarHeroi(scan.nextInt());
       }
+
 
       private void vezDoHeroi() {
             // Vez do Herói
