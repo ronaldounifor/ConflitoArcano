@@ -6,9 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import model.Personagem;
@@ -18,6 +16,29 @@ import model.Personagem;
  */
 public class GameDatabase {
     private static final String DATABASE_URL = "jdbc:sqlite:conflito.db";
+
+    private Connection conn;
+
+    public GameDatabase() {
+        connect();
+    }
+
+    public void connect() {
+        Connection conn = null;
+        try {
+            // Register the JDBC driver
+            Class.forName("org.sqlite.JDBC");
+            // Establish the connection
+            conn = DriverManager.getConnection(DATABASE_URL);
+        } catch (ClassNotFoundException e) {
+            System.out.println("SQLite JDBC Driver not found.");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("Connection to SQLite has failed.");
+            e.printStackTrace();
+        }
+        this.conn = conn;
+    }
 
     public void insertCharacter(String name, int health, int attackPower, int defensePower) {
         String sql = "INSERT INTO Characters (name, health, attack_power, defense_power) VALUES (?, ?, ?, ?)";
@@ -91,23 +112,28 @@ public class GameDatabase {
         return characters;
     }
 
-    public Personagem findPersonagemByID(int nextInt) {
-        Personagem personagem = null;
+    public Personagem findPersonagemByID(int id) {
+    Personagem personagem = null;
 
-        String query = "SELECT name, health FROM Characters";
+    String sql = "SELECT name, health FROM Characters WHERE id = ?";
 
-        try (Connection conn = DriverManager.getConnection(DATABASE_URL);
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            while (rs.next())
-                personagem = new Personagem(rs.getString("name"), rs.getInt("id"));
-
-        } catch (Exception e) {
-            e.printStackTrace();
+    try (Connection conn = DriverManager.getConnection(DATABASE_URL);
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+         
+        pstmt.setInt(1, id);
+        
+        // Use executeQuery() to retrieve results
+        try (ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                // Create a new Personagem using retrieved data
+                personagem = new Personagem(rs.getString("name"), rs.getInt("health"));
+            }
         }
-
-        return personagem;
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
     }
+
+    return personagem; // Will be null if no record is found
+}
 
 }

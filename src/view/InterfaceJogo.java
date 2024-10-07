@@ -16,11 +16,8 @@ public class InterfaceJogo {
 
             iniciarJogo();
 
-            vezDoHeroi();
-
             scan.close();
       }
-
       
       private void iniciarJogo() {
             System.out.println("Escolha o nível de dificuldade (1 - Facil, 2 - Medio, 3 - Dificil): ");
@@ -35,13 +32,13 @@ public class InterfaceJogo {
                   System.out.println("["+personagem.getKey()+"]: "+personagem.getValue());
             
             conflito.selecionarHeroi(scan.nextInt());
+
+            vezDoHeroi();
       }
 
 
       private void vezDoHeroi() {
-            // Vez do Herói
             System.out.println("Escolha a magia do heroi: ");
-            // Selecione sua magia
 
             for (int i = 0; i < Grimorio.MAGIAS.length; i++)
                   System.out.println("["+i+"]. "+Grimorio.MAGIAS[i].getNome());
@@ -64,4 +61,3 @@ public class InterfaceJogo {
                   vezDoHeroi();
       }
 }
-      

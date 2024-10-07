@@ -2,15 +2,14 @@ package controller;
 
 import java.util.Map;
 
-import data.GameDatabase;
+import data.adapter.DBAdapter;
+import data.adapter.GameDataBaseAdapter;
+import data.adapter.GerenteBDAdapter;
 import model.Personagem;
-import model.item.Anel;
-import model.item.Brinco;
-import model.item.Chapeu;
 import model.magia.Magia;
 
 public class Conflito {
-    private GameDatabase entityManager;
+    private DBAdapter entityManager;
 
     private int numeroInimigos;
 
@@ -18,9 +17,11 @@ public class Conflito {
     private Personagem vilao;
 
     public Conflito(int dificuldade) {
-        entityManager = new GameDatabase();
+        entityManager = new GameDataBaseAdapter();
 
         this.numeroInimigos = dificuldade;
+
+        this.vilao = new Personagem("Mago Goblin", 35);
     }
 
     public boolean turnoHeroi(Magia magia) {
@@ -33,6 +34,13 @@ public class Conflito {
         if(!vilaoVivo) {
             //TODO registrar duelo
             // entityManager.insertDuelResult(0, 0, 0, vilaoVivo);
+
+            if(numeroInimigos > 0) {
+                numeroInimigos--;
+
+                this.vilao = new Personagem("Mago Goblin", 35);
+                vilaoVivo = true;
+            }
         }
 
         return vilaoVivo;
@@ -56,10 +64,10 @@ public class Conflito {
     }
 
     public Map<Integer, String> iniciar() {
-        return entityManager.getAllCharacterNames();
+        return entityManager.listarPersonagens();
     }
 
-    public void selecionarHeroi(int nextInt) {
-        heroi = entityManager.findPersonagemByID(nextInt);
+    public void selecionarHeroi(int id) {
+        heroi = entityManager.buscarPersonagemPorID(id);
     }
 }
