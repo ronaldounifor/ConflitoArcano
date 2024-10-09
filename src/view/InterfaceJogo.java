@@ -24,7 +24,7 @@ public class InterfaceJogo {
             int dificuldade = scan.nextInt();
 
             this.conflito = new Conflito(dificuldade);
-
+            //TODO agrupar iniciar e Construtor
             Map<Integer, String> personagens = conflito.iniciar();
 
             System.out.println("Escolhe o seu personagem: ");

@@ -11,6 +11,7 @@ public class Grimorio {
     // Array que contém todas as habilidades
     public static final Magia[] MAGIAS;
 
+    //TODO Colocar magia de gelo
     static {
         // Inicializa o array com o tamanho adequado
         MAGIAS = new Magia[]{

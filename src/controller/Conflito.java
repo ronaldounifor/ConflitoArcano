@@ -1,53 +1,68 @@
 package controller;
 
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import data.adapter.DBAdapter;
-import data.adapter.GameDataBaseAdapter;
 import data.adapter.GerenteBDAdapter;
 import model.Personagem;
 import model.magia.Magia;
+import model.nivel.Nivel;
+import model.nivel.NivelDificil;
+import model.nivel.NivelFacil;
+import model.nivel.NivelMedio;
 
 public class Conflito {
     private DBAdapter entityManager;
 
-    private int numeroInimigos;
-
+    private Nivel nivel;
     private Personagem heroi;
-    private Personagem vilao;
+    private Personagem inimigoAtual;
 
     public Conflito(int dificuldade) {
-        entityManager = new GameDataBaseAdapter();
+        entityManager = new GerenteBDAdapter();
 
-        this.numeroInimigos = dificuldade;
+        //FIXME L do SOLID
+        if(dificuldade == 1)
+            this.nivel = new NivelFacil();
+        else if(dificuldade == 2)
+            this.nivel = new NivelMedio();
+        else
+            this.nivel = new NivelDificil();
 
-        this.vilao = new Personagem("Mago Goblin", 35);
+        this.nivel.gerar();
+
+        try {
+            this.inimigoAtual = nivel.fornecerInimigo();
+        } catch (NoSuchElementException e) {
+            //TODO Transferir turnoHeroi para construtor
+            System.out.println("TEste emtreo no catch");
+        }
     }
 
+    //TODO registrar duelo no BD
+    // entityManager.insertDuelResult(0, 0, 0, vilaoVivo);
     public boolean turnoHeroi(Magia magia) {
-        magia.aplicarEfeito(heroi, vilao);
+        magia.aplicarEfeito(heroi, inimigoAtual);
 
         imprimirResultado();
         
-        boolean vilaoVivo = vilao.getVida() > 0;
+        boolean vilaoVivo = true;
 
-        if(!vilaoVivo) {
-            //TODO registrar duelo
-            // entityManager.insertDuelResult(0, 0, 0, vilaoVivo);
-
-            if(numeroInimigos > 0) {
-                numeroInimigos--;
-
-                this.vilao = new Personagem("Mago Goblin", 35);
-                vilaoVivo = true;
+        if(inimigoAtual.getVida() <= 0) {
+            try {
+                inimigoAtual = nivel.fornecerInimigo();
+            } catch (NoSuchElementException e) {
+                vilaoVivo = false;
             }
         }
 
         return vilaoVivo;
     }
 
+    //FIXME Vilao age por conta propria
     public boolean turnoVilao(Magia magia) {
-        magia.aplicarEfeito(vilao, heroi);
+        magia.aplicarEfeito(inimigoAtual, heroi);
 
         imprimirResultado();
 
@@ -58,7 +73,7 @@ public class Conflito {
         System.out.println();
         System.out.println("#########################################");
         System.out.println(heroi.getNome()+"("+(heroi.getVida()>0?heroi.getVida():0)+" de vida), "
-                        + vilao.getNome()+"("+(vilao.getVida()>0?vilao.getVida():0)+" de vida)");
+                        + inimigoAtual.getNome()+"("+(inimigoAtual.getVida()>0?inimigoAtual.getVida():0)+" de vida)");
         System.out.println("#########################################");
         System.out.println();
     }
