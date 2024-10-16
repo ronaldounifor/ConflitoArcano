@@ -5,9 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import model.Personagem;
@@ -48,7 +46,7 @@ public class GerenteBancoDados {
                 if (rs.next()) {
                     String nome = rs.getString("nome");
                     int vida = rs.getInt("vida");
-                    personagem = new Personagem(nome, vida); // Supondo que você tenha um construtor apropriado
+                    personagem = new Personagem(nome, vida, 10); // Supondo que você tenha um construtor apropriado
                 }
             }
         } catch (SQLException e) {

@@ -17,29 +17,6 @@ import model.Personagem;
 public class GameDatabase {
     private static final String DATABASE_URL = "jdbc:sqlite:conflito.db";
 
-    private Connection conn;
-
-    public GameDatabase() {
-        connect();
-    }
-
-    public void connect() {
-        Connection conn = null;
-        try {
-            // Register the JDBC driver
-            Class.forName("org.sqlite.JDBC");
-            // Establish the connection
-            conn = DriverManager.getConnection(DATABASE_URL);
-        } catch (ClassNotFoundException e) {
-            System.out.println("SQLite JDBC Driver not found.");
-            e.printStackTrace();
-        } catch (SQLException e) {
-            System.out.println("Connection to SQLite has failed.");
-            e.printStackTrace();
-        }
-        this.conn = conn;
-    }
-
     public void insertCharacter(String name, int health, int attackPower, int defensePower) {
         String sql = "INSERT INTO Characters (name, health, attack_power, defense_power) VALUES (?, ?, ?, ?)";
         
@@ -113,27 +90,27 @@ public class GameDatabase {
     }
 
     public Personagem findPersonagemByID(int id) {
-    Personagem personagem = null;
+        Personagem personagem = null;
 
-    String sql = "SELECT name, health, attack_power FROM Characters WHERE id = ?";
+        String sql = "SELECT name, health, attack_power FROM Characters WHERE id = ?";
 
-    try (Connection conn = DriverManager.getConnection(DATABASE_URL);
-         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-         
-        pstmt.setInt(1, id);
-        
-        // Use executeQuery() to retrieve results
-        try (ResultSet rs = pstmt.executeQuery()) {
-            if (rs.next()) {
-                // Create a new Personagem using retrieved data
-                personagem = new Personagem(rs.getString("name"), rs.getInt("health"), rs.getInt("attack_power"));
+        try (Connection conn = DriverManager.getConnection(DATABASE_URL);
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, id);
+            
+            // Use executeQuery() to retrieve results
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    // Create a new Personagem using retrieved data
+                    personagem = new Personagem(rs.getString("name"), rs.getInt("health"), rs.getInt("attack_power"));
+                }
             }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
-    } catch (SQLException e) {
-        System.out.println(e.getMessage());
-    }
 
-    return personagem; // Will be null if no record is found
-}
+        return personagem; // Will be null if no record is found
+    }
 
 }

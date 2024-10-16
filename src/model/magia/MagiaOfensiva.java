@@ -2,7 +2,6 @@ package model.magia;
 
 import model.Personagem;
 import model.TipoMagia;
-import util.Dado;
 
 public class MagiaOfensiva extends Magia {
     private int dano;
