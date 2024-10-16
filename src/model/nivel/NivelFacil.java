@@ -10,7 +10,7 @@ public class NivelFacil extends Nivel {
         int numeroGoblins = Dado.getInstancia().lancarDado(3);
 
         while (--numeroGoblins >= 0)
-            inimigos.add(new Personagem("Goblin Mago", 25));
+            inimigos.add(new Personagem("Goblin Mago", 25, 5));
     }
 
     @Override

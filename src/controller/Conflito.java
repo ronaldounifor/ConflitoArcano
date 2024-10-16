@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import data.adapter.DBAdapter;
+import data.adapter.GameDataBaseAdapter;
 import data.adapter.GerenteBDAdapter;
 import model.Personagem;
 import model.magia.Magia;
@@ -20,7 +21,7 @@ public class Conflito {
     private Personagem inimigoAtual;
 
     public Conflito(int dificuldade) {
-        entityManager = new GerenteBDAdapter();
+        entityManager = new GameDataBaseAdapter();
 
         //FIXME L do SOLID
         if(dificuldade == 1)

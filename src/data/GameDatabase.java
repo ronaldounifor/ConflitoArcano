@@ -115,7 +115,7 @@ public class GameDatabase {
     public Personagem findPersonagemByID(int id) {
     Personagem personagem = null;
 
-    String sql = "SELECT name, health FROM Characters WHERE id = ?";
+    String sql = "SELECT name, health, attack_power FROM Characters WHERE id = ?";
 
     try (Connection conn = DriverManager.getConnection(DATABASE_URL);
          PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -126,7 +126,7 @@ public class GameDatabase {
         try (ResultSet rs = pstmt.executeQuery()) {
             if (rs.next()) {
                 // Create a new Personagem using retrieved data
-                personagem = new Personagem(rs.getString("name"), rs.getInt("health"));
+                personagem = new Personagem(rs.getString("name"), rs.getInt("health"), rs.getInt("attack_power"));
             }
         }
     } catch (SQLException e) {

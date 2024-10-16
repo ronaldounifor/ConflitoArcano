@@ -6,7 +6,7 @@ public class NivelDificil extends Nivel {
 
     @Override
     protected void criarInimigos() {
-        inimigos.add(new Personagem("Minotauro", 225));
+        inimigos.add(new Personagem("Minotauro", 225, 125));
     }
 
     @Override
